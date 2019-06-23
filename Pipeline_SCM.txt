@@ -1,0 +1,88 @@
+
+
+Complex Pipelines are difficult to write and maintain within the classic UI’s Script text area of the Pipeline configuration page.
+
+To make this easier, your Pipeline’s Jenkinsfile can be written in a text editor or integrated development environment (IDE) and committed to source control [3] (optionally with the application code that Jenkins will build). Jenkins can then check out your Jenkinsfile from source control as part of your Pipeline project’s build process and then proceed to execute your Pipeline.
+
+To configure your Pipeline project to use a Jenkinsfile from source control:
+
+    Follow the procedure above for defining your Pipeline through the classic UI until you reach step 5 (accessing the Pipeline section on the Pipeline configuration page).
+
+    From the Definition field, choose the Pipeline script from SCM option.
+
+    From the SCM field, choose the type of source control system of the repository containing your Jenkinsfile.
+
+    Complete the fields specific to your repository’s source control system.
+    Tip: If you are uncertain of what value to specify for a given field, click its ? icon to the right for more information.
+
+    In the Script Path field, specify the location (and name) of your Jenkinsfile. This location is the one that Jenkins checks out/clones the repository containing your Jenkinsfile, which should match that of the repository’s file structure. The default value of this field assumes that your Jenkinsfile is named "Jenkinsfile" and is located at the root of the repository.
+
+When you update the designated repository, a new build is triggered, as long as the Pipeline is configured with an SCM polling trigger.
+	
+
+Since Pipeline code (i.e. Scripted Pipeline in particular) is written in Groovy-like syntax, if your IDE is not correctly syntax highlighting your Jenkinsfile, try inserting the line #!/usr/bin/env groovy at the top of the Jenkinsfile, [4] [5] which may rectify the issue.
+Built-in Documentation
+
+Pipeline ships with built-in documentation features to make it easier to create Pipelines of varying complexities. This built-in documentation is automatically generated and updated based on the plugins installed in the Jenkins instance.
+
+The built-in documentation can be found globally at: localhost:8080/pipeline-syntax/, assuming you have a Jenkins instance running on localhost port 8080. The same documentation is also linked as Pipeline Syntax in the side-bar for any configured Pipeline project.
+
+Snippet Generator
+
+The built-in "Snippet Generator" utility is helpful for creating bits of code for individual steps, discovering new steps provided by plugins, or experimenting with different parameters for a particular step.
+
+The Snippet Generator is dynamically populated with a list of the steps available to the Jenkins instance. The number of steps available is dependent on the plugins installed which explicitly expose steps for use in Pipeline.
+
+To generate a step snippet with the Snippet Generator:
+
+    Navigate to the Pipeline Syntax link (referenced above) from a configured Pipeline, or at localhost:8080/pipeline-syntax.
+
+    Select the desired step in the Sample Step dropdown menu
+
+    Use the dynamically populated area below the Sample Step dropdown to configure the selected step.
+
+    Click Generate Pipeline Script to create a snippet of Pipeline which can be copied and pasted into a Pipeline.
+
+
+
+
+To access additional information and/or documentation about the step selected, click on the help icon (indicated by the red arrow in the image above).
+Global Variable Reference
+
+In addition to the Snippet Generator, which only surfaces steps, Pipeline also provides a built-in "Global Variable Reference." Like the Snippet Generator, it is also dynamically populated by plugins. Unlike the Snippet Generator however, the Global Variable Reference only contains documentation for variables provided by Pipeline or plugins, which are available for Pipelines.
+
+The variables provided by default in Pipeline are:
+
+env
+
+    Environment variables accessible from Scripted Pipeline, for example: env.PATH or env.BUILD_ID. Consult the built-in Global Variable Reference for a complete, and up to date, list of environment variables available in Pipeline.
+params
+
+    Exposes all parameters defined for the Pipeline as a read-only Map, for example: params.MY_PARAM_NAME.
+currentBuild
+
+    May be used to discover information about the currently executing Pipeline, with properties such as currentBuild.result, currentBuild.displayName, etc. Consult the built-in Global Variable Reference for a complete, and up to date, list of properties available on currentBuild.
+
+Declarative Directive Generator
+
+While the Snippet Generator helps with generating steps for a Scripted Pipeline or for the steps block in a stage in a Declarative Pipeline, it does not cover the sections and directives used to define a Declarative Pipeline. The "Declarative Directive Generator" utility helps with that. Similar to the Snippet Generator, the Directive Generator allows you to choose a Declarative directive, configure it in a form, and generate the configuration for that directive, which you can then use in your Declarative Pipeline.
+
+To generate a Declarative directive using the Declarative Directive Generator:
+
+    Navigate to the Pipeline Syntax link (referenced above) from a configured Pipeline, and then click on the Declarative Directive Generator link in the sidepanel, or go directly to localhost:8080/directive-generator.
+
+    Select the desired directive in the dropdown menu
+
+    Use the dynamically populated area below the dropdown to configure the selected directive.
+
+    Click Generate Directive to create the directive’s configuration to copy into your Pipeline.
+
+The Directive Generator can generate configuration for nested directives, such as conditions inside a when directive, but it cannot generate Pipeline steps. For the contents of directives which contain steps, such as steps inside a stage or conditions like always or failure inside post, the Directive Generator adds a placeholder comment instead. You will still need to add steps to your Pipeline by hand.
+Jenkinsfile (Declarative Pipeline)
+
+stage('Stage 1') {
+    steps {
+        // One or more steps need to be included within the steps block.
+    }
+}
+
