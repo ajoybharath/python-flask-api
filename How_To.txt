@@ -1,8 +1,10 @@
 How To
 
-We are going to build & test Python web api service with Jenkins CI (continuous integration) pipeline (using Jenkinsfile)
+We are going to build & test Python web api service with Jenkins 
 
-    1. build a small HelloWorld API with Flask, a popular web microframework originally released in 2010
+This is a pipeline using Jenkinsfile 
+
+    1. build a small HelloWorld API with Flask
     2. create some xUnit style unit tests for the service
     3. how to integrate this into Jenkins with JUnit test reporting support
 
@@ -19,11 +21,13 @@ chmod +x app.py
 ./app.py &
 
 # test the server 
-curl -i localhost:5000/
-curl -i localhost:5000/hello/
-curl -i localhost:5000/hello/Ajoy
+curl -i localhost:9001/
+curl -i localhost:9001/hello/
+curl -i localhost:9001/hello/Ajoy
 
-As we tested the application with three routes: / , /hello/, and /hello/Simon. Now we can write some tests to test these routes.
+As we tested the application with three routes: / , /hello/, and /hello/Ajoy
+
+Now we can write some tests to test these routes.
 Create the Tests
 
 Run this in bash to create our test cases:
@@ -33,6 +37,9 @@ To run the tests, we simply run something like:
 ./test.py
 
 
+We use blue-ocean jenkins in docker to run this pipeline
+
+You can use the terraform codes in repository demo_cicd branch demo_cicd_tf to start another instance
 
 Jenkins has the ability present test results in a graphical visual way, as long as you can output the results in a JUnit format. JUnit is a popular xUnit type of test framework, and JUnit output format (an XML file) is ubiquitous test reporting. Essentially, any CI (Continuous Integration) solution will support this format, including Jenkins.
 
@@ -63,63 +70,3 @@ We need to update the Jenkinsfile to have a final post step in the test stage, t
 
 
 In Jenkins, run this pipeline.
-
-
-
-To create a basic Pipeline through the Jenkins classic UI:
-
-    If required, ensure you are logged in to Jenkins.
-
-    From the Jenkins home page (i.e. the Dashboard of the Jenkins classic UI), click New Item at the top left.
-
-
-
-In the Enter an item name field, specify the name for your new Pipeline project.
-Caution: Jenkins uses this item name to create directories on disk. It is recommended to avoid using spaces in item names, since doing so may uncover bugs in scripts that do not properly handle spaces in directory paths.
-
-Scroll down and click Pipeline, then click OK at the end of the page to open the Pipeline configuration page (whose General tab is selected).
-
-
-
-Click the Pipeline tab at the top of the page to scroll down to the Pipeline section.
-Note: If instead you are defining your Jenkinsfile in source control, follow the instructions in In SCM below.
-
-In the Pipeline section, ensure that the Definition field indicates the Pipeline script option.
-
-Enter your Pipeline code into the Script text area.
-For instance, copy the following Declarative example Pipeline code (below the Jenkinsfile ( …​ ) heading) or its Scripted version equivalent and paste this into the Script text area. (The Declarative example below is used throughout the remainder of this procedure.)
-Jenkinsfile (Declarative Pipeline)
-
-pipeline {
-    agent any 
-    stages {
-        stage('Stage 1') {
-            steps {
-                echo 'Hello world!' 
-            }
-        }
-    }
-}
-
-	agent instructs Jenkins to allocate an executor (on any available agent/node in the Jenkins environment) and workspace for the entire Pipeline.
-	echo writes simple string in the console output.
-	node effectively does the same as agent (above).
-
-
-
-Click Save to open the Pipeline project/item view page.
-
-On this page, click Build Now on the left to run the Pipeline.
-
-
-
-Under Build History on the left, click #1 to access the details for this particular Pipeline run.
-
-Click Console Output to see the full output from the Pipeline run. The following output shows a successful run of your Pipeline.
-
-P.S:
-
-        You can also access the console output directly from the Dashboard by clicking the colored globe to the left of the build number (e.g. #1).
-
-        Defining a Pipeline through the classic UI is convenient for testing Pipeline code snippets, or for handling simple Pipelines or Pipelines that do not require source code to be checked out/cloned from a repository. For greater control and flexibility over your Pipeline, particularly for projects in source control that are likely to gain complexity, it is recommended that you use source control to define your Jenkinsfile.
-
