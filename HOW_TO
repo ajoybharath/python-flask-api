@@ -1,6 +1,8 @@
-How To
-
 We are going to build & test Python web api service with Jenkins 
+
+You can clone the repository below
+
+https://github.com/ajoybharath/python-flask-api.git
 
 This is a pipeline using Jenkinsfile 
 
