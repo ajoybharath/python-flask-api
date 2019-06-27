@@ -21,9 +21,9 @@ chmod +x app.py
 ./app.py &
 
 # test the server 
-curl -i localhost:9001/
-curl -i localhost:9001/hello/
-curl -i localhost:9001/hello/Ajoy
+curl -i localhost:5000/
+curl -i localhost:5000/hello/
+curl -i localhost:5000/hello/Ajoy
 
 As we tested the application with three routes: / , /hello/, and /hello/Ajoy
 

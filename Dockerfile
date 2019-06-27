@@ -11,6 +11,6 @@ RUN pip install -r requirements.txt
 # Bundle app source
 COPY app.py /usr/src/app
 
-EXPOSE 9001
+EXPOSE 5000
 ENTRYPOINT ["python"]
 CMD ["app.py"]
